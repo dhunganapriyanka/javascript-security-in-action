@@ -1,0 +1,9 @@
+{
+  "name": "javascript-security-in-action",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Small examples of JavaScript vulnerabilities and how to fix them.",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

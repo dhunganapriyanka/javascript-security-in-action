@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure JavaScript | Secure JavaScript Practices</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="secure">
+  <main class="page">
+    <header>
+      <p class="title">Secure JavaScript Practices</p>
+      <h1>Secure JavaScript</h1>
+      <p>This page keeps the same features but uses safer JavaScript and a Content Security Policy (CSP).</p>
+      <nav>
+        <a href="/vulnerable.html">Vulnerable JavaScript</a>
+        <a class="active" href="/secure.html">Secure JavaScript</a>
+      </nav>
+    </header>
+
+    <section class="panel">
+      <h2>1. Preventing XSS</h2>
+      <p>This version uses <code>textContent</code>. The input is displayed as text rather than HTML.</p>
+      <label for="message">Message</label>
+      <input id="message" type="text" value="Hello from JavaScript">
+      <button id="showMessage">Show message</button>
+      <p class="result-label">Result:</p>
+      <div id="messageResult" class="result" aria-live="polite"></div>
+      <p class="hint">Try the same input: <code>&lt;img src=x onerror="alert('XSS test')"&gt;</code></p>
+    </section>
+
+    <section class="panel">
+      <h2>2. Replacing eval()</h2>
+      <p>This version uses <code>JSON.parse()</code> to read JSON data without running it as JavaScript.</p>
+      <label for="dataInput">Data</label>
+      <textarea id="dataInput" rows="3">{"name":"Student"}</textarea>
+      <button id="readData">Read data</button>
+      <p class="result-label">Result:</p>
+      <div id="dataResult" class="result" aria-live="polite"></div>
+      <p class="hint">Try the same unsafe input: <code>{"name": alert("eval test") || "Student"}</code></p>
+    </section>
+
+    <p class="footnote">The server sends a CSP header that blocks inline JavaScript and use of eval().</p>
+  </main>
+  <!-- separate file is allowed by our CSP. -->
+  <script src="/secure.js"></script>
+</body>
+</html>

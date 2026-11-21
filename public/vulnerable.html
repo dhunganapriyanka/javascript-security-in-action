@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vulnerable JavaScript | Secure JavaScript Practices</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="vulnerable">
+  <main class="page">
+    <header>
+      <p class="title">Secure JavaScript Practices</p>
+      <h1>Vulnerable JavaScript (Bad Practice)</h1>
+      <p>This page intentionally uses unsafe JavaScript where an attacker can inject malicious scripts into web pages.</p>
+      <nav>
+        <a class="active" href="/vulnerable.html">Vulnerable JavaScript</a>
+        <a href="/secure.html">Secure JavaScript</a>
+      </nav>
+    </header>
+
+    <section class="panel">
+      <h2>1. Cross-Site Scripting (XSS)</h2>
+      <p>Enter a message and click the button. This version uses <code>innerHTML</code>, which treats your input as HTML.</p>
+      <label for="message">Message</label>
+      <input id="message" type="text" value="Hello from JavaScript">
+      <button id="showMessage">Show message</button>
+      <p class="result-label">Result:</p>
+      <div id="messageResult" class="result" aria-live="polite"></div>
+      <p class="hint">Try: <code>&lt;img src=x onerror="alert('XSS test')"&gt;</code></p>
+    </section>
+
+    <section class="panel">
+      <h2>2. Unsafe eval()</h2>
+      <p>Enter data and click the button. This version uses <code>eval()</code>, which can run JavaScript instead of simply reading data.</p>
+      <label for="dataInput">Data</label>
+      <textarea id="dataInput" rows="3">{"name":"Student"}</textarea>
+      <button id="readData">Read data</button>
+      <p class="result-label">Result:</p>
+      <div id="dataResult" class="result" aria-live="polite"></div>
+      <p class="hint">Try: <code>{"name": alert("eval test") || "Student"}</code></p>
+    </section>
+
+    <p class="footnote">This page uses unsafe code. Avoid such code at all cost while coding.</p>
+  </main>
+
+  <script>
+    document.getElementById("showMessage").addEventListener("click", () => {
+      const message = document.getElementById("message").value;
+      document.getElementById("messageResult").innerHTML = message;
+    });
+
+    document.getElementById("readData").addEventListener("click", () => {
+      const input = document.getElementById("dataInput").value;
+      const result = document.getElementById("dataResult");
+
+      try {
+        // eval() executes JavaScript from the input.
+        const data = eval("(" + input + ")");
+        result.textContent = "Name: " + data.name;
+      } catch (error) {
+        result.textContent = "Could not read the data.";
+      }
+    });
+  </script>
+</body>
+</html>
